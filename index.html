@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>N5手帳 — Notatnik N5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFAF7;
+    --surface:#FFFFFF;
+    --text:#1E1B18;
+    --text-muted:#6B6459;
+    --border:#DEDACF;
+    --accent:#BC002D;
+    --accent-contrast:#FFFFFF;
+    --accent-tint:#F6E4E6;
+    --chip-bg:#F1EFE8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#181613;
+      --surface:#211E1A;
+      --text:#EDE9E1;
+      --text-muted:#A69E8F;
+      --border:#3A362F;
+      --accent:#E23A55;
+      --accent-contrast:#181613;
+      --accent-tint:#3A1E22;
+      --chip-bg:#2A2620;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#181613;
+    --surface:#211E1A;
+    --text:#EDE9E1;
+    --text-muted:#A69E8F;
+    --border:#3A362F;
+    --accent:#E23A55;
+    --accent-contrast:#181613;
+    --accent-tint:#3A1E22;
+    --chip-bg:#2A2620;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans JP', system-ui, sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Noto Serif JP', serif;
+    font-weight:700;
+    margin:0 0 8px;
+    color:var(--text);
+  }
+  a{ color:var(--accent); }
+  button{ font-family:inherit; }
+
+  .shell{ display:flex; min-height:100vh; }
+
+  /* Sidebar */
+  .sidebar{
+    width:230px;
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    padding:22px 14px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:4px 8px 18px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:14px;
+  }
+  .brand .dot{
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent);
+    flex-shrink:0;
+  }
+  .brand-text{ line-height:1.25; }
+  .brand-text strong{ font-family:'Noto Serif JP', serif; font-size:16px; display:block; }
+  .brand-text span{ font-size:11px; color:var(--text-muted); }
+
+  .navlist{ display:flex; flex-direction:column; gap:2px; flex:1; }
+  .navlist button{
+    text-align:left;
+    padding:9px 10px;
+    border:none;
+    background:none;
+    color:var(--text-muted);
+    font-size:13.5px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .navlist button:hover{ background:var(--chip-bg); color:var(--text); }
+  .navlist button.active{
+    background:var(--accent-tint);
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  .sidebar-footer{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+    font-size:11.5px;
+    color:var(--text-muted);
+    text-align:left;
+  }
+
+  /* Top-right theme switcher */
+  .theme-switch{
+    position:fixed;
+    top:16px;
+    right:20px;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:5px 6px;
+  }
+  .theme-switch button{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:14px;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text-muted);
+  }
+  .theme-switch button.active{
+    background:var(--accent-tint);
+    color:var(--accent);
+  }
+
+  /* Content */
+  .content{ flex:1; padding:36px 44px 80px; max-width:920px; }
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  .eyebrow-count{ font-size:12px; color:var(--text-muted); margin-bottom:26px; }
+
+  /* Home */
+  .hero{
+    border-bottom:1px solid var(--border);
+    padding-bottom:22px;
+    margin-bottom:26px;
+    padding-right:60px;
+  }
+  .hero h1{ font-size:26px; }
+  .hero p{ color:var(--text-muted); max-width:60ch; margin:0; }
+  .countdown{
+    display:inline-block;
+    margin-top:14px;
+    font-size:13px;
+    color:var(--accent);
+    font-weight:700;
+  }
+  .linkgrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+  }
+  .linkgrid button{
+    background:var(--surface);
+    border:none;
+    padding:18px;
+    text-align:left;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .linkgrid button:hover{ background:var(--accent-tint); }
+  .linkgrid strong{ display:block; font-family:'Noto Serif JP', serif; font-size:15px; margin-bottom:3px; }
+  .linkgrid span{ font-size:12.5px; color:var(--text-muted); }
+
+  .countdown-card{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    margin-top:48px;
+    padding:28px 32px;
+    background:var(--accent-tint);
+    border:1px solid var(--border);
+  }
+  .countdown-sun{ width:88px; height:88px; flex-shrink:0; }
+  .countdown-text{ line-height:1.2; }
+  .countdown-days{
+    font-family:'Noto Serif JP', serif;
+    font-weight:700;
+    font-size:52px;
+    color:var(--accent);
+  }
+  .countdown-label{ font-size:15px; color:var(--text); margin-top:2px; }
+  .countdown-date{ font-size:12.5px; color:var(--text-muted); margin-top:4px; }
+
+  /* Lesson picker */
+  .lesson-select-row{ margin-bottom:20px; }
+  .lesson-select{
+    font-family:inherit;
+    font-size:14px;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .lesson-nav{ display:flex; justify-content:space-between; margin-top:20px; gap:10px; }
+  .lesson-nav button{
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    padding:10px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:13.5px;
+  }
+  .lesson-nav button:hover:not(:disabled){ border-color:var(--accent); color:var(--accent); }
+  .lesson-nav button:disabled{ opacity:0.35; cursor:default; }
+
+  /* Filters (vocab) */
+  .filter-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .filter-row select{
+    font-family:inherit;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    font-size:13.5px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .pill-cat{
+    font-size:11px;
+    padding:2px 8px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text-muted);
+    background:var(--chip-bg);
+  }
+
+  .lesson-block{
+    border:1px solid var(--border);
+    margin-bottom:16px;
+  }
+  .lesson-head{
+    background:var(--chip-bg);
+    padding:10px 16px;
+    font-family:'Noto Serif JP', serif;
+    font-weight:700;
+    font-size:15px;
+    border-bottom:1px solid var(--border);
+  }
+  .grammar-item{
+    padding:14px 16px;
+    border-bottom:1px solid var(--border);
+  }
+  .grammar-item:last-child{ border-bottom:none; }
+  .g-pattern{ font-size:16px; font-weight:700; margin-bottom:4px; }
+  .g-explain{ color:var(--text-muted); font-size:13.5px; margin-bottom:6px; }
+  .g-example{ font-size:14px; background:var(--bg); border-left:3px solid var(--accent); padding:8px 12px; }
+  .g-example .en{ color:var(--text-muted); font-size:12.5px; margin-top:2px; }
+
+  /* Tables */
+  .searchbar{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    font-size:14px;
+    margin-bottom:14px;
+    border-radius:3px;
+  }
+  .searchbar:focus{ outline:none; border-color:var(--accent); }
+  table.data{ width:100%; border-collapse:collapse; margin-bottom:10px; }
+  table.data th{
+    text-align:left;
+    font-size:11.5px;
+    text-transform:none;
+    color:var(--text-muted);
+    border-bottom:1px solid var(--border);
+    padding:8px 10px;
+    font-weight:700;
+  }
+  table.data td{
+    padding:9px 10px;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+  }
+  table.data tr:hover td{ background:var(--chip-bg); }
+  .kanji-cell{ font-size:19px; font-family:'Noto Serif JP', serif; }
+  .note-box{
+    border:1px dashed var(--border);
+    padding:12px 14px;
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-top:16px;
+  }
+
+  /* Checklist */
+  .check-group{ margin-bottom:22px; }
+  .check-group h3{ font-size:14px; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:8px; }
+  .check-row{ display:flex; align-items:flex-start; gap:8px; padding:5px 0; font-size:14px; }
+  .check-row input{ margin-top:4px; accent-color:var(--accent); }
+
+  /* Link list (practice/resources) */
+  .reslist{ list-style:none; margin:0; padding:0; }
+  .reslist li{
+    border-bottom:1px solid var(--border);
+    padding:12px 4px;
+  }
+  .reslist a{ font-weight:700; text-decoration:none; }
+  .reslist a:hover{ text-decoration:underline; }
+  .reslist p{ margin:3px 0 0; font-size:13px; color:var(--text-muted); }
+
+  @media (max-width:800px){
+    .shell{ flex-direction:column; }
+    .sidebar{
+      width:100%; height:auto; position:sticky; top:0;
+      flex-direction:row; align-items:center;
+      overflow-x:auto; padding:10px;
+      z-index:20;
+    }
+    .brand{ display:none; }
+    .navlist{ flex-direction:row; }
+    .navlist button{ white-space:nowrap; }
+    .sidebar-footer{ display:none; }
+    .content{ padding:56px 18px 60px; }
+    .hero{ padding-right:0; }
+    .linkgrid{ grid-template-columns:1fr; }
+    .countdown-card{ flex-direction:column; text-align:center; padding:24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="theme-switch" id="theme-switch">
+  <button id="theme-light-btn" type="button" title="Tryb jasny">☀️</button>
+  <button id="theme-dark-btn" type="button" title="Tryb ciemny">🌙</button>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="dot"></div>
+      <div class="brand-text">
+        <strong>N5手帳</strong>
+        <span>Notatnik N5</span>
+      </div>
+    </div>
+    <div class="navlist" id="navlist"></div>
+    <div class="sidebar-footer">by paczes</div>
+  </aside>
+
+  <main class="content" id="content"></main>
+</div>
+
+<script>
+/* ---------------- THEME ---------------- */
+(function(){
+  const root = document.documentElement;
+  const lightBtn = document.getElementById('theme-light-btn');
+  const darkBtn = document.getElementById('theme-dark-btn');
+
+  function getStored(){
+    try{ return localStorage.getItem('n5-theme'); }catch(e){ return null; }
+  }
+  function setStored(v){
+    try{ localStorage.setItem('n5-theme', v); }catch(e){}
+  }
+  function apply(theme){
+    root.setAttribute('data-theme', theme);
+    lightBtn.classList.toggle('active', theme === 'light');
+    darkBtn.classList.toggle('active', theme === 'dark');
+  }
+
+  let current = getStored() || 'light';
+  apply(current);
+
+  lightBtn.addEventListener('click', () => { current = 'light'; apply(current); setStored(current); });
+  darkBtn.addEventListener('click', () => { current = 'dark'; apply(current); setStored(current); });
+})();
+
+/* ---------------- DATA ---------------- */
+
+const grammarData = [
+  {
+    lesson:'Lekcja 1', ready:true,
+    items:[
+      { pattern:'N1は N2です', explain:'N1 to N2. Podstawowe zdanie tożsamościowe z partykułą tematu は (czyt. "wa").', jp:'わたしは マイク・ミラーです。', en:'Jestem Mike Miller.' },
+      { pattern:'N1は N2ですか', explain:'Forma pytająca. Dodajemy か na końcu; nie potrzeba znaku zapytania, intonacja rośnie zamiast tego.', jp:'サントスさんは がくせいですか。', en:'Czy pan Santos jest studentem?' },
+      { pattern:'N1は N2じゃ(では)ありません', explain:'Forma przecząca です. じゃ jest potoczne, では bardziej formalne / pisane.', jp:'わたしは がくせいじゃありません。', en:'Nie jestem studentem.' },
+      { pattern:'N1も N2です', explain:'"Też". も zastępuje は, gdy dodajemy podobny fakt o innym temacie.', jp:'ミラーさんも かいしゃいん（会社員）です。', en:'Pan Miller też jest pracownikiem firmy.' },
+      { pattern:'N1の N2', explain:'の łączy dwa rzeczowniki, zwykle pokazując przynależność (firma, dział itd.).', jp:'わたしは IMCの エンジニアです。', en:'Jestem inżynierem w IMC.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 2', ready:true,
+    items:[
+      { pattern:'これ／それ／あれ／どれ', explain:'To (blisko mnie) / to (blisko ciebie) / tamto (daleko od obu) / które. Używane samodzielnie, zastępując rzecz.', jp:'これは じしょ（辞書）です。', en:'To jest słownik.' },
+      { pattern:'この／その／あの／どの + N', explain:'Ta sama logika odległości co これ/それ/あれ, ale zawsze musi stać bezpośrednio przed rzeczownikiem — nie może stać samodzielnie.', jp:'この ほん（本）は わたしのです。', en:'Ta książka jest moja.' },
+      { pattern:'N + の (dopełniacz, rzeczownik pominięty)', explain:'の może zastąpić "N + の + rzeczownik", gdy rzeczownik jest już jasny z kontekstu.', jp:'それは わたしのですか。', en:'Czy to jest moje?' },
+      { pattern:'そうです／そうじゃありません', explain:'Używane do potwierdzania lub zaprzeczania pytaniom identyfikującym rzeczowniki (nie przymiotniki).', jp:'A: これは でんわ（電話）ですか。 B: はい、そうです。', en:'A: Czy to jest telefon? B: Tak, zgadza się.' },
+      { pattern:'N1と N2', explain:'"I", łączy rzeczowniki (nie czasowniki ani zdania).', jp:'これは 辞書と 本です。', en:'To jest słownik i książka.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 3', ready:true,
+    items:[
+      { pattern:'ここ／そこ／あそこ／どこ', explain:'Tutaj / tam / tam dalej / gdzie — używane dla miejsc, stoją samodzielnie jako podmiot.', jp:'トイレは あそこです。', en:'Toaleta jest tam.' },
+      { pattern:'こちら／そちら／あちら／どちら', explain:'Grzeczniejsze wersje powyższych słów miejsca; używane też, by grzecznie zapytać o kierunek, pochodzenie lub osobę.', jp:'おくには どちらですか。', en:'Skąd pan/pani pochodzi? (grzecznie)' },
+      { pattern:'N1は N2の N3です', explain:'Pokazuje, że osoba (N1) należy do organizacji lub miejsca (N2), opisana rolą N3.', jp:'わたしは ブラジルの 会社の 人です。', en:'Jestem z brazylijskiej firmy.' },
+      { pattern:'この／その／あの たてもの + 〜かい／がい', explain:'Wyrażenia liczące piętra za pomocą ~階 (かい/がい), by opisać, na którym piętrze coś się znajduje.', jp:'エレベーターは あそこです。２かいです。', en:'Winda jest tam. To 2. piętro.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 4', ready:true,
+    items:[
+      { pattern:'今 何時ですか／何分ですか', explain:'Pytanie o godzinę. 何時 = która godzina, 何分 = ile minut.', jp:'今 何時ですか。 ７時半です。', en:'Która jest teraz godzina? Jest 7:30.' },
+      { pattern:'N (czas)から N (czas)まで', explain:'"Od~ do~" — określa zakres czasu (lub miejsca).', jp:'銀行は ９時から ３時までです。', en:'Bank jest czynny od 9 do 15.' },
+      { pattern:'Czasownik + ます (forma grzeczna, teraźniejszo-przyszła)', explain:'Wprowadzenie do grzecznej formy ます: 起きます (wstawać), 寝ます (spać/kłaść się), 働きます (pracować), 休みます (odpoczywać/mieć wolne).', jp:'毎朝 ６時に 起きます。', en:'Codziennie rano wstaję o 6.' },
+      { pattern:'毎朝／毎晩／毎日 + czasownik', explain:'Wyrażenia opisujące codzienne czynności: "każdego ranka / wieczoru / dnia".', jp:'毎晩 11時に 寝ます。', en:'Każdego wieczoru kładę się spać o 23.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 5', ready:true,
+    items:[
+      { pattern:'miejsce + へ (に) 行きます／来ます／帰ります', explain:'Czasowniki kierunku "iść / przyjść / wrócić" z partykułą へ oznaczającą kierunek ruchu.', jp:'あした 大阪へ 行きます。', en:'Jutro jadę do Osaki.' },
+      { pattern:'środek transportu + で', explain:'で oznacza środek transportu przy czasownikach ruchu.', jp:'バスで 会社へ 行きます。', en:'Jadę do pracy autobusem.' },
+      { pattern:'人と いっしょに', explain:'"Razem z (osobą)" — dodaje towarzysza do czynności.', jp:'友達と いっしょに 行きます。', en:'Idę razem z przyjacielem.' },
+      { pattern:'いつ', explain:'"Kiedy" — pytanie o czas, bez potrzeby partykuły に po いつ.', jp:'いつ 日本へ 行きますか。', en:'Kiedy jedziesz do Japonii?' },
+    ]
+  },
+  { lesson:'Lekcja 6', ready:false, items:[] },
+  { lesson:'Lekcja 7', ready:false, items:[] },
+  { lesson:'Lekcja 8', ready:false, items:[] },
+  { lesson:'Lekcja 9', ready:false, items:[] },
+  { lesson:'Lekcja 10', ready:false, items:[] },
+];
+
+const vocabData = [
+  { kanji:'私', hira:'わたし', meaning:'ja', lesson:1, category:'ludzie' },
+  { kanji:'あなた', hira:'あなた', meaning:'ty / pan / pani', lesson:1, category:'ludzie' },
+  { kanji:'〜さん', hira:'〜さん', meaning:'pan / pani ~', lesson:1, category:'ludzie' },
+  { kanji:'先生', hira:'せんせい', meaning:'nauczyciel (też jako tytuł)', lesson:1, category:'ludzie' },
+  { kanji:'学生', hira:'がくせい', meaning:'student', lesson:1, category:'ludzie' },
+  { kanji:'会社員', hira:'かいしゃいん', meaning:'pracownik firmy', lesson:1, category:'ludzie' },
+  { kanji:'銀行員', hira:'ぎんこういん', meaning:'pracownik banku', lesson:1, category:'ludzie' },
+  { kanji:'医者', hira:'いしゃ', meaning:'lekarz', lesson:1, category:'ludzie' },
+  { kanji:'研究者', hira:'けんきゅうしゃ', meaning:'badacz', lesson:1, category:'ludzie' },
+  { kanji:'大学', hira:'だいがく', meaning:'uniwersytet', lesson:1, category:'miejsca' },
+  { kanji:'病院', hira:'びょういん', meaning:'szpital', lesson:1, category:'miejsca' },
+  { kanji:'誰', hira:'だれ', meaning:'kto', lesson:1, category:'ludzie' },
+  { kanji:'何歳', hira:'なんさい', meaning:'ile lat', lesson:1, category:'ludzie' },
+  { kanji:'本', hira:'ほん', meaning:'książka', lesson:2, category:'przedmioty' },
+  { kanji:'辞書', hira:'じしょ', meaning:'słownik', lesson:2, category:'przedmioty' },
+  { kanji:'雑誌', hira:'ざっし', meaning:'magazyn', lesson:2, category:'przedmioty' },
+  { kanji:'新聞', hira:'しんぶん', meaning:'gazeta', lesson:2, category:'przedmioty' },
+  { kanji:'鉛筆', hira:'えんぴつ', meaning:'ołówek', lesson:2, category:'przedmioty' },
+  { kanji:'手帳', hira:'てちょう', meaning:'notes / terminarz', lesson:2, category:'przedmioty' },
+  { kanji:'鍵', hira:'かぎ', meaning:'klucz', lesson:2, category:'przedmioty' },
+  { kanji:'時計', hira:'とけい', meaning:'zegar / zegarek', lesson:2, category:'przedmioty' },
+  { kanji:'傘', hira:'かさ', meaning:'parasol', lesson:2, category:'przedmioty' },
+  { kanji:'鞄', hira:'かばん', meaning:'torba', lesson:2, category:'przedmioty' },
+  { kanji:'机', hira:'つくえ', meaning:'biurko', lesson:2, category:'przedmioty' },
+  { kanji:'英語', hira:'えいご', meaning:'język angielski', lesson:2, category:'języki' },
+  { kanji:'日本語', hira:'にほんご', meaning:'język japoński', lesson:2, category:'języki' },
+  { kanji:'何時', hira:'なんじ', meaning:'która godzina', lesson:4, category:'czas' },
+  { kanji:'起きます', hira:'おきます', meaning:'wstawać', lesson:4, category:'czasowniki' },
+  { kanji:'寝ます', hira:'ねます', meaning:'spać / kłaść się', lesson:4, category:'czasowniki' },
+  { kanji:'働きます', hira:'はたらきます', meaning:'pracować', lesson:4, category:'czasowniki' },
+  { kanji:'休みます', hira:'やすみます', meaning:'odpoczywać / mieć wolne', lesson:4, category:'czasowniki' },
+  { kanji:'毎日', hira:'まいにち', meaning:'codziennie', lesson:4, category:'czas' },
+  { kanji:'行きます', hira:'いきます', meaning:'iść / jechać', lesson:5, category:'czasowniki' },
+  { kanji:'来ます', hira:'きます', meaning:'przychodzić', lesson:5, category:'czasowniki' },
+  { kanji:'帰ります', hira:'かえります', meaning:'wracać', lesson:5, category:'czasowniki' },
+  { kanji:'飛行機', hira:'ひこうき', meaning:'samolot', lesson:5, category:'podróże' },
+  { kanji:'新幹線', hira:'しんかんせん', meaning:'shinkansen (kolej dużych prędkości)', lesson:5, category:'podróże' },
+  { kanji:'一人で', hira:'ひとりで', meaning:'samemu / w pojedynkę', lesson:5, category:'podróże' },
+];
+
+const kanjiData = [
+  { k:'日', on:'ニチ', kun:'ひ', meaning:'dzień / słońce', lesson:'—' },
+  { k:'月', on:'ゲツ', kun:'つき', meaning:'księżyc / miesiąc', lesson:'—' },
+  { k:'火', on:'カ', kun:'ひ', meaning:'ogień', lesson:'—' },
+  { k:'水', on:'スイ', kun:'みず', meaning:'woda', lesson:'—' },
+  { k:'木', on:'モク', kun:'き', meaning:'drzewo', lesson:'—' },
+  { k:'金', on:'キン', kun:'かね', meaning:'złoto / pieniądze', lesson:'—' },
+  { k:'土', on:'ド', kun:'つち', meaning:'ziemia', lesson:'—' },
+  { k:'人', on:'ジン・ニン', kun:'ひと', meaning:'osoba', lesson:'1' },
+  { k:'男', on:'ダン', kun:'おとこ', meaning:'mężczyzna', lesson:'—' },
+  { k:'女', on:'ジョ', kun:'おんな', meaning:'kobieta', lesson:'—' },
+  { k:'子', on:'シ', kun:'こ', meaning:'dziecko', lesson:'—' },
+  { k:'学', on:'ガク', kun:'まな.ぶ', meaning:'nauka', lesson:'1' },
+  { k:'生', on:'セイ', kun:'う.まれる', meaning:'życie / narodziny', lesson:'1' },
+  { k:'先', on:'セン', kun:'さき', meaning:'poprzedni / wcześniej', lesson:'1' },
+  { k:'私', on:'シ', kun:'わたし', meaning:'ja / prywatny', lesson:'1' },
+  { k:'大', on:'ダイ', kun:'おお.きい', meaning:'duży', lesson:'1' },
+  { k:'小', on:'ショウ', kun:'ちい.さい', meaning:'mały', lesson:'—' },
+  { k:'中', on:'チュウ', kun:'なか', meaning:'środek / wewnątrz', lesson:'—' },
+  { k:'外', on:'ガイ', kun:'そと', meaning:'na zewnątrz', lesson:'—' },
+  { k:'上', on:'ジョウ', kun:'うえ', meaning:'góra / nad', lesson:'—' },
+  { k:'下', on:'カ', kun:'した', meaning:'dół / pod', lesson:'—' },
+  { k:'本', on:'ホン', kun:'—', meaning:'książka / pochodzenie', lesson:'2' },
+  { k:'今', on:'コン', kun:'いま', meaning:'teraz', lesson:'4' },
+  { k:'何', on:'カ', kun:'なに・なん', meaning:'co', lesson:'1' },
+  { k:'時', on:'ジ', kun:'とき', meaning:'czas / godzina', lesson:'4' },
+  { k:'半', on:'ハン', kun:'なか.ば', meaning:'połowa', lesson:'4' },
+  { k:'分', on:'フン・ブン', kun:'わ.ける', meaning:'minuta / część', lesson:'4' },
+  { k:'年', on:'ネン', kun:'とし', meaning:'rok', lesson:'—' },
+  { k:'会', on:'カイ', kun:'あ.う', meaning:'spotkanie / zrzeszenie', lesson:'1' },
+  { k:'社', on:'シャ', kun:'やしろ', meaning:'firma / świątynia', lesson:'1' },
+  { k:'行', on:'コウ', kun:'い.く', meaning:'iść', lesson:'5' },
+  { k:'来', on:'ライ', kun:'く.る', meaning:'przychodzić', lesson:'5' },
+];
+
+/* ---------------- PAGE RENDERERS ---------------- */
+
+function homePage(){
+  const testDate = new Date('2026-12-06T00:00:00');
+  const now = new Date();
+  const days = Math.max(0, Math.ceil((testDate - now) / 86400000));
+  return `
+    <div class="hero">
+      <h1>N5手帳</h1>
+      <p>Wspólny notatnik gramatyki, słownictwa i kanji do JLPT N5, oparty na Minna no Nihongo I.</p>
+    </div>
+    <div class="linkgrid">
+      <button onclick="goTo('grammar')"><strong>Gramatyka</strong><span>Wzorce zdaniowe wg lekcji</span></button>
+      <button onclick="goTo('vocab')"><strong>Słownictwo</strong><span>Przeszukiwalne listy słów</span></button>
+      <button onclick="goTo('kanji')"><strong>Kanji</strong><span>Odczyty i znaczenia</span></button>
+      <button onclick="goTo('resources')"><strong>Materiały</strong><span>Słowniki, testy próbne i linki zewnętrzne</span></button>
+    </div>
+    <div class="countdown-card">
+      <svg class="countdown-sun" viewBox="0 0 140 140" aria-hidden="true">
+        <defs>
+          <radialGradient id="sunGrad" cx="42%" cy="38%" r="65%">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="1"/>
+          </radialGradient>
+        </defs>
+        <g fill="var(--accent)">
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(0 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(45 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(90 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(135 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(180 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(225 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(270 70 70)"/>
+          <rect x="65" y="1" width="10" height="26" rx="5" transform="rotate(315 70 70)"/>
+        </g>
+        <circle cx="70" cy="70" r="36" fill="url(#sunGrad)"/>
+      </svg>
+      <div class="countdown-text">
+        <div class="countdown-days">${days}</div>
+        <div class="countdown-label">dni do egzaminu JLPT N5</div>
+        <div class="countdown-date">6 grudnia 2026</div>
+      </div>
+    </div>
+  `;
+}
+
+let currentGrammarLesson = 0;
+
+function grammarLessonBody(index){
+  const l = grammarData[index];
+  const isFirst = index === 0;
+  const isLast = index === grammarData.length - 1;
+  const body = l.ready ? `
+    <div class="lesson-block">
+      ${l.items.map(it => `
+        <div class="grammar-item">
+          <div class="g-pattern">${it.pattern}</div>
+          <div class="g-explain">${it.explain}</div>
+          <div class="g-example">${it.jp}<div class="en">${it.en}</div></div>
+        </div>
+      `).join('')}
+    </div>
+  ` : `<div class="note-box">Treść tej lekcji jeszcze nie została dodana — wróć tu później.</div>`;
+  return `
+    <div class="lesson-select-row">
+      <select class="lesson-select" onchange="goToGrammarLesson(this.value)">
+        ${grammarData.map((g,i) => `<option value="${i}" ${i===index?'selected':''}>${g.lesson}</option>`).join('')}
+      </select>
+    </div>
+    ${body}
+    <div class="lesson-nav">
+      <button ${isFirst?'disabled':''} onclick="goToGrammarLesson(${index-1})">← Poprzednia lekcja</button>
+      <button ${isLast?'disabled':''} onclick="goToGrammarLesson(${index+1})">Następna lekcja →</button>
+    </div>
+  `;
+}
+
+function goToGrammarLesson(i){
+  i = Number(i);
+  if(i < 0 || i >= grammarData.length) return;
+  currentGrammarLesson = i;
+  const el = document.getElementById('grammar-body');
+  if(el) el.innerHTML = grammarLessonBody(i);
+  window.scrollTo(0,0);
+}
+
+function grammarPage(){
+  return `
+    <h2>Gramatyka</h2>
+    <div class="eyebrow-count">Lekcje 1–5 uzupełnione · reszta dochodzi na bieżąco</div>
+    <div id="grammar-body">${grammarLessonBody(currentGrammarLesson)}</div>
+    <div class="note-box">Wyjaśnienia gramatyki pochodzą z pamięci na podstawie Minna no Nihongo I — warto porównać z własnym podręcznikiem i zgłosić wszystko, co wygląda podejrzanie, żeby to poprawić.</div>
+  `;
+}
+
+function vocabPage(){
+  const lessons = [...new Set(vocabData.map(v => v.lesson))].sort((a,b) => a - b);
+  const categories = [...new Set(vocabData.map(v => v.category))];
+  return `
+    <h2>Słownictwo</h2>
+    <div class="eyebrow-count">Lekcje 1, 2, 4, 5 · ${vocabData.length} słów jak dotąd</div>
+    <input class="searchbar" id="vocab-search" placeholder="Szukaj po kanji, hiraganie lub znaczeniu..." oninput="filterVocab()">
+    <div class="filter-row">
+      <select id="vocab-lesson-filter" onchange="filterVocab()">
+        <option value="">Wszystkie lekcje</option>
+        ${lessons.map(l => `<option value="${l}">Lekcja ${l}</option>`).join('')}
+      </select>
+      <select id="vocab-category-filter" onchange="filterVocab()">
+        <option value="">Wszystkie kategorie</option>
+        ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
+      </select>
+    </div>
+    <table class="data" id="vocab-table">
+      <thead><tr><th>Kanji</th><th>Hiragana</th><th>Znaczenie</th><th>Kategoria</th><th>Lekcja</th></tr></thead>
+      <tbody>
+        ${vocabData.map(v => `<tr data-lesson="${v.lesson}" data-category="${v.category}"><td class="kanji-cell">${v.kanji}</td><td>${v.hira}</td><td>${v.meaning}</td><td><span class="pill-cat">${v.category}</span></td><td>${v.lesson}</td></tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function filterVocab(){
+  const q = (document.getElementById('vocab-search').value || '').trim().toLowerCase();
+  const lessonVal = document.getElementById('vocab-lesson-filter').value;
+  const catVal = document.getElementById('vocab-category-filter').value;
+  const rows = document.querySelectorAll('#vocab-table tbody tr');
+  rows.forEach(r => {
+    const matchesText = r.textContent.toLowerCase().includes(q);
+    const matchesLesson = !lessonVal || r.dataset.lesson === lessonVal;
+    const matchesCat = !catVal || r.dataset.category === catVal;
+    r.style.display = (matchesText && matchesLesson && matchesCat) ? '' : 'none';
+  });
+}
+
+function kanjiPage(){
+  return `
+    <h2>Kanji</h2>
+    <div class="eyebrow-count">${kanjiData.length} z ok. 100 kanji N5 jak dotąd</div>
+    <input class="searchbar" id="kanji-search" placeholder="Szukaj po kanji, odczycie lub znaczeniu..." oninput="filterTable('kanji-search','kanji-table')">
+    <table class="data" id="kanji-table">
+      <thead><tr><th>Kanji</th><th>Odczyt on</th><th>Odczyt kun</th><th>Znaczenie</th><th>Lekcja</th></tr></thead>
+      <tbody>
+        ${kanjiData.map(k => `<tr><td class="kanji-cell">${k.k}</td><td>${k.on}</td><td>${k.kun}</td><td>${k.meaning}</td><td>${k.lesson}</td></tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+const resourceGroups = [
+  {
+    title:'Testy i ćwiczenia',
+    items:[
+      { name:'Oficjalna strona JLPT', url:'https://www.jlpt.jp/e/index.html', desc:'Terminy egzaminów, przykładowe pytania i oficjalne informacje od Japan Foundation.' },
+      { name:'JLPT Sensei — N5', url:'https://jlptsensei.com/jlpt-n5/', desc:'Pytania ćwiczeniowe i testy próbne uporządkowane według poziomu JLPT.' },
+      { name:'Bunpro', url:'https://bunpro.jp', desc:'Ćwiczenia gramatyczne w systemie SRS, przydatne do utrwalania wzorców N5.' },
+    ]
+  },
+  {
+    title:'Słowniki i narzędzia',
+    items:[
+      { name:'Jisho.org', url:'https://jisho.org', desc:'Szybki słownik japońsko-angielski, dobry do szukania kanji po kluczu lub odczycie.' },
+      { name:'WaniKani', url:'https://www.wanikani.com', desc:'Nauka kanji metodą powtórek rozłożonych w czasie, jeśli chcesz dodatkowego treningu poza tą listą.' },
+      { name:'Anki', url:'https://apps.ankiweb.net', desc:'Aplikacja do fiszek — dobra do zbudowania wspólnej talii na bazie stron Słownictwo i Kanji.' },
+    ]
+  },
+  {
+    title:'Gramatyka',
+    items:[
+      { name:"Tae Kim's Guide to Japanese", url:'https://guidetojapanese.org', desc:'Darmowy przewodnik gramatyczny, jeśli chcesz drugiego wyjaśnienia obok Minna no Nihongo.' },
+    ]
+  },
+];
+
+function resourcesPage(){
+  return `
+    <h2>Materiały</h2>
+    <div class="eyebrow-count">Testy próbne, słowniki, narzędzia i linki zewnętrzne</div>
+    ${resourceGroups.map(g => `
+      <div class="check-group">
+        <h3>${g.title}</h3>
+        <ul class="reslist">
+          ${g.items.map(i => `<li><a href="${i.url}" target="_blank" rel="noopener">${i.name}</a><p>${i.desc}</p></li>`).join('')}
+        </ul>
+      </div>
+    `).join('')}
+  `;
+}
+
+/* ---------------- ROUTER ---------------- */
+
+const pages = [
+  { id:'home', label:'Strona główna', render:homePage },
+  { id:'grammar', label:'Gramatyka', render:grammarPage },
+  { id:'vocab', label:'Słownictwo', render:vocabPage },
+  { id:'kanji', label:'Kanji', render:kanjiPage },
+  { id:'resources', label:'Materiały', render:resourcesPage },
+];
+
+const navlist = document.getElementById('navlist');
+const contentEl = document.getElementById('content');
+
+pages.forEach(p => {
+  const btn = document.createElement('button');
+  btn.textContent = p.label;
+  btn.id = 'nav-' + p.id;
+  btn.onclick = () => goTo(p.id);
+  navlist.appendChild(btn);
+});
+
+function goTo(id){
+  const page = pages.find(p => p.id === id);
+  if(!page) return;
+  contentEl.innerHTML = page.render();
+  pages.forEach(p => document.getElementById('nav-' + p.id).classList.toggle('active', p.id === id));
+  window.scrollTo(0,0);
+}
+
+function filterTable(inputId, tableId){
+  const q = document.getElementById(inputId).value.trim().toLowerCase();
+  const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+  rows.forEach(r => {
+    const text = r.textContent.toLowerCase();
+    r.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+goTo('home');
+</script>
+
+</body>
+</html>
