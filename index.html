@@ -86,15 +86,52 @@
     padding:4px 8px 18px;
     border-bottom:1px solid var(--border);
     margin-bottom:14px;
+    cursor:pointer;
+    border-radius:6px;
   }
+  .brand:hover{ background:var(--chip-bg); }
   .brand .dot{
     width:14px; height:14px; border-radius:50%;
     background:var(--accent);
     flex-shrink:0;
   }
-  .brand-text{ line-height:1.25; }
+  .brand-text{ line-height:1.25; flex:1; }
   .brand-text strong{ font-family:'Noto Serif JP', serif; font-size:16px; display:block; }
   .brand-text span{ font-size:11px; color:var(--text-muted); }
+  .sidebar-hide{
+    flex-shrink:0;
+    width:26px;
+    height:26px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-muted);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .sidebar-hide:hover{ border-color:var(--accent); color:var(--accent); }
+
+  .sidebar.hidden{ display:none; }
+  .sidebar-reopen{
+    display:none;
+    position:fixed;
+    top:16px;
+    left:20px;
+    z-index:30;
+    width:34px;
+    height:34px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-muted);
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .sidebar-reopen.visible{ display:flex; }
+  .sidebar-reopen:hover{ border-color:var(--accent); color:var(--accent); }
 
   .navlist{ display:flex; flex-direction:column; gap:2px; flex:1; }
   .navlist button{
@@ -104,7 +141,7 @@
     background:none;
     color:var(--text-muted);
     font-size:13.5px;
-    border-radius:3px;
+    border-radius:6px;
     cursor:pointer;
   }
   .navlist button:hover{ background:var(--chip-bg); color:var(--text); }
@@ -121,7 +158,23 @@
     font-size:11.5px;
     color:var(--text-muted);
     text-align:left;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
   }
+  .footer-mail{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;
+    height:26px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    color:var(--text-muted);
+    flex-shrink:0;
+  }
+  .footer-mail:hover{ border-color:var(--accent); color:var(--accent); }
 
   /* Top-right theme switcher */
   .theme-switch{
@@ -181,19 +234,18 @@
   .linkgrid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:1px;
-    background:var(--border);
-    border:1px solid var(--border);
+    gap:12px;
   }
   .linkgrid button{
     background:var(--surface);
-    border:none;
+    border:1px solid var(--border);
+    border-radius:14px;
     padding:18px;
     text-align:left;
     cursor:pointer;
     color:var(--text);
   }
-  .linkgrid button:hover{ background:var(--accent-tint); }
+  .linkgrid button:hover{ background:var(--accent-tint); border-color:var(--accent); }
   .linkgrid strong{ display:block; font-family:'Noto Serif JP', serif; font-size:15px; margin-bottom:3px; }
   .linkgrid span{ font-size:12.5px; color:var(--text-muted); }
 
@@ -205,6 +257,7 @@
     padding:28px 32px;
     background:var(--accent-tint);
     border:1px solid var(--border);
+    border-radius:18px;
   }
   .countdown-sun{ width:88px; height:88px; flex-shrink:0; }
   .countdown-text{ line-height:1.2; }
@@ -222,12 +275,18 @@
   .lesson-select{
     font-family:inherit;
     font-size:14px;
-    padding:9px 12px;
+    padding:10px 38px 10px 14px;
     border:1px solid var(--border);
-    background:var(--surface);
+    background-color:var(--surface);
     color:var(--text);
-    border-radius:3px;
+    border-radius:6px;
     cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6459' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    background-size:12px;
   }
   .lesson-nav{ display:flex; justify-content:space-between; margin-top:20px; gap:10px; }
   .lesson-nav button{
@@ -235,7 +294,7 @@
     background:var(--surface);
     color:var(--text);
     padding:10px 16px;
-    border-radius:3px;
+    border-radius:6px;
     cursor:pointer;
     font-size:13.5px;
   }
@@ -246,19 +305,25 @@
   .filter-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
   .filter-row select{
     font-family:inherit;
-    padding:9px 12px;
+    padding:9px 34px 9px 12px;
     border:1px solid var(--border);
-    background:var(--surface);
+    background-color:var(--surface);
     color:var(--text);
     font-size:13.5px;
-    border-radius:3px;
+    border-radius:6px;
     cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6459' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    background-size:11px;
   }
   .pill-cat{
     font-size:11px;
     padding:2px 8px;
     border:1px solid var(--border);
-    border-radius:10px;
+    border-radius:6px;
     color:var(--text-muted);
     background:var(--chip-bg);
   }
@@ -294,7 +359,7 @@
     color:var(--text);
     font-size:14px;
     margin-bottom:14px;
-    border-radius:3px;
+    border-radius:6px;
   }
   .searchbar:focus{ outline:none; border-color:var(--accent); }
   table.data{ width:100%; border-collapse:collapse; margin-bottom:10px; }
@@ -313,7 +378,31 @@
     font-size:14px;
   }
   table.data tr:hover td{ background:var(--chip-bg); }
-  .kanji-cell{ font-size:19px; font-family:'Noto Serif JP', serif; }
+  .kanji-cell{
+    font-size:19px;
+    font-family:'Noto Serif JP', serif;
+    position:relative;
+    cursor:default;
+  }
+  .kanji-cell:hover::after{
+    content: attr(data-k);
+    position:absolute;
+    left:0;
+    bottom:100%;
+    margin-bottom:8px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 18px;
+    font-size:52px;
+    line-height:1;
+    font-family:'Noto Serif JP', serif;
+    box-shadow:0 6px 20px rgba(0,0,0,0.18);
+    z-index:60;
+    white-space:nowrap;
+    color:var(--text);
+    pointer-events:none;
+  }
   .note-box{
     border:1px dashed var(--border);
     padding:12px 14px;
@@ -322,38 +411,111 @@
     margin-top:16px;
   }
 
-  /* Checklist */
-  .check-group{ margin-bottom:22px; }
-  .check-group h3{ font-size:14px; border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:8px; }
-  .check-row{ display:flex; align-items:flex-start; gap:8px; padding:5px 0; font-size:14px; }
-  .check-row input{ margin-top:4px; accent-color:var(--accent); }
-
   /* Link list (practice/resources) */
   .reslist{ list-style:none; margin:0; padding:0; }
-  .reslist li{
-    border-bottom:1px solid var(--border);
-    padding:12px 4px;
-  }
+  .reslist li{ border-bottom:1px solid var(--border); padding:12px 4px; }
   .reslist a{ font-weight:700; text-decoration:none; }
   .reslist a:hover{ text-decoration:underline; }
   .reslist p{ margin:3px 0 0; font-size:13px; color:var(--text-muted); }
 
+  /* Resource groups */
+  .res-group{ margin-bottom:28px; }
+  .res-group h3{
+    display:inline-block;
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--accent-tint);
+    padding:6px 12px;
+    border-radius:6px;
+    margin:0 0 12px;
+  }
+  .res-group .reslist{ border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  .res-group .reslist li{ padding:14px 16px; }
+  .res-group .reslist li:last-child{ border-bottom:none; }
+
+  /* Mobile hamburger + backdrop */
+  .mobile-menu-btn{
+    display:none;
+    position:fixed;
+    top:14px;
+    left:16px;
+    z-index:50;
+    width:42px;
+    height:42px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  .mobile-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    z-index:39;
+  }
+  .mobile-backdrop.visible{ display:block; }
+
   @media (max-width:800px){
     .shell{ flex-direction:column; }
+    .mobile-menu-btn{ display:flex; }
+    .sidebar-reopen{ display:none !important; }
     .sidebar{
-      width:100%; height:auto; position:sticky; top:0;
-      flex-direction:row; align-items:center;
-      overflow-x:auto; padding:10px;
-      z-index:20;
+      position:fixed;
+      top:0; left:0;
+      width:82%;
+      max-width:320px;
+      height:100vh;
+      transform:translateX(-100%);
+      transition:transform 0.25s ease;
+      z-index:40;
+      flex-direction:column;
+      padding:20px 16px;
+      box-shadow:4px 0 24px rgba(0,0,0,0.2);
     }
-    .brand{ display:none; }
-    .navlist{ flex-direction:row; }
-    .navlist button{ white-space:nowrap; }
-    .sidebar-footer{ display:none; }
-    .content{ padding:56px 18px 60px; }
+    .sidebar.mobile-open{ transform:translateX(0); }
+    .brand{ display:flex; }
+    .navlist{ flex-direction:column; }
+    .navlist button{ white-space:normal; font-size:16.5px; padding:15px 14px; }
+    .sidebar-footer{ display:flex; font-size:13px; }
+    .footer-mail{ width:32px; height:32px; }
+
+    .content{ padding:76px 18px 60px; }
     .hero{ padding-right:0; }
     .linkgrid{ grid-template-columns:1fr; }
+    .linkgrid button{ padding:20px; }
     .countdown-card{ flex-direction:column; text-align:center; padding:24px 20px; }
+
+    /* Bigger, more tappable controls */
+    .theme-switch button{ width:34px; height:34px; font-size:16px; }
+    .lesson-select{
+      width:100%;
+      font-size:16px;
+      padding:14px 42px 14px 16px;
+      background-position:right 16px center;
+      background-size:14px;
+    }
+    .lesson-nav{ flex-direction:column; }
+    .lesson-nav button{ width:100%; padding:15px 16px; font-size:15px; }
+    .filter-row{ flex-direction:column; }
+    .filter-row select{
+      width:100%;
+      font-size:16px;
+      padding:14px 42px 14px 16px;
+      background-position:right 16px center;
+      background-size:14px;
+    }
+    .searchbar{ font-size:16px; padding:14px 16px; }
+    table.data th, table.data td{ padding:11px 8px; font-size:13px; }
+    .kanji-cell{ font-size:18px; }
   }
 </style>
 </head>
@@ -364,17 +526,35 @@
   <button id="theme-dark-btn" type="button" title="Tryb ciemny">🌙</button>
 </div>
 
+<button class="sidebar-reopen" id="sidebar-reopen-btn" type="button" title="Pokaż panel" aria-label="Pokaż panel">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+
+<button class="mobile-menu-btn" id="mobile-menu-btn" type="button" title="Menu" aria-label="Otwórz menu">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<div class="mobile-backdrop" id="mobile-backdrop"></div>
+
 <div class="shell">
   <aside class="sidebar">
-    <div class="brand">
+    <div class="brand" id="brand-home" role="button" tabindex="0" title="Strona główna">
       <div class="dot"></div>
       <div class="brand-text">
         <strong>N5手帳</strong>
         <span>Notatnik N5</span>
       </div>
+      <button class="sidebar-hide" id="sidebar-hide-btn" type="button" title="Ukryj panel" aria-label="Ukryj panel">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
     </div>
     <div class="navlist" id="navlist"></div>
-    <div class="sidebar-footer">by paczes</div>
+    <div class="sidebar-footer">
+      <div>⋅ by paczes ⋅</div>
+      <a class="footer-mail" href="mailto:arkd@pm.me" title="arkd@pm.me" aria-label="Wyślij e-mail">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6l9 7 9-7"/></svg>
+      </a>
+    </div>
   </aside>
 
   <main class="content" id="content"></main>
@@ -406,6 +586,45 @@
   darkBtn.addEventListener('click', () => { current = 'dark'; apply(current); setStored(current); });
 })();
 
+/* ---------------- SIDEBAR ---------------- */
+const mobileQuery = window.matchMedia('(max-width:800px)');
+
+function openSidebar(){
+  const sidebar = document.querySelector('.sidebar');
+  if(mobileQuery.matches){
+    sidebar.classList.add('mobile-open');
+    document.getElementById('mobile-backdrop').classList.add('visible');
+  } else {
+    sidebar.classList.remove('hidden');
+    document.getElementById('sidebar-reopen-btn').classList.remove('visible');
+  }
+}
+function closeSidebar(){
+  const sidebar = document.querySelector('.sidebar');
+  if(mobileQuery.matches){
+    sidebar.classList.remove('mobile-open');
+    document.getElementById('mobile-backdrop').classList.remove('visible');
+  } else {
+    sidebar.classList.add('hidden');
+    document.getElementById('sidebar-reopen-btn').classList.add('visible');
+  }
+}
+
+(function(){
+  const hideBtn = document.getElementById('sidebar-hide-btn');
+  const reopenBtn = document.getElementById('sidebar-reopen-btn');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const backdrop = document.getElementById('mobile-backdrop');
+  const brand = document.getElementById('brand-home');
+
+  hideBtn.addEventListener('click', (e) => { e.stopPropagation(); closeSidebar(); });
+  reopenBtn.addEventListener('click', () => openSidebar());
+  menuBtn.addEventListener('click', () => openSidebar());
+  backdrop.addEventListener('click', () => closeSidebar());
+  brand.addEventListener('click', () => { goTo('home'); if(mobileQuery.matches) closeSidebar(); });
+  brand.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo('home'); if(mobileQuery.matches) closeSidebar(); } });
+})();
+
 /* ---------------- DATA ---------------- */
 
 const grammarData = [
@@ -415,18 +634,18 @@ const grammarData = [
       { pattern:'N1は N2です', explain:'N1 to N2. Podstawowe zdanie tożsamościowe z partykułą tematu は (czyt. "wa").', jp:'わたしは マイク・ミラーです。', en:'Jestem Mike Miller.' },
       { pattern:'N1は N2ですか', explain:'Forma pytająca. Dodajemy か na końcu; nie potrzeba znaku zapytania, intonacja rośnie zamiast tego.', jp:'サントスさんは がくせいですか。', en:'Czy pan Santos jest studentem?' },
       { pattern:'N1は N2じゃ(では)ありません', explain:'Forma przecząca です. じゃ jest potoczne, では bardziej formalne / pisane.', jp:'わたしは がくせいじゃありません。', en:'Nie jestem studentem.' },
-      { pattern:'N1も N2です', explain:'"Też". も zastępuje は, gdy dodajemy podobny fakt o innym temacie.', jp:'ミラーさんも かいしゃいん（会社員）です。', en:'Pan Miller też jest pracownikiem firmy.' },
+      { pattern:'N1も N2です', explain:'"Też". も zastępuje は, gdy dodajemy podobny fakt o innym temacie.', jp:'ミラーさんも かいしゃいんです。', en:'Pan Miller też jest pracownikiem firmy.' },
       { pattern:'N1の N2', explain:'の łączy dwa rzeczowniki, zwykle pokazując przynależność (firma, dział itd.).', jp:'わたしは IMCの エンジニアです。', en:'Jestem inżynierem w IMC.' },
     ]
   },
   {
     lesson:'Lekcja 2', ready:true,
     items:[
-      { pattern:'これ／それ／あれ／どれ', explain:'To (blisko mnie) / to (blisko ciebie) / tamto (daleko od obu) / które. Używane samodzielnie, zastępując rzecz.', jp:'これは じしょ（辞書）です。', en:'To jest słownik.' },
-      { pattern:'この／その／あの／どの + N', explain:'Ta sama logika odległości co これ/それ/あれ, ale zawsze musi stać bezpośrednio przed rzeczownikiem — nie może stać samodzielnie.', jp:'この ほん（本）は わたしのです。', en:'Ta książka jest moja.' },
+      { pattern:'これ／それ／あれ／どれ', explain:'To (blisko mnie) / to (blisko ciebie) / tamto (daleko od obu) / które. Używane samodzielnie, zastępując rzecz.', jp:'これは じしょです。', en:'To jest słownik.' },
+      { pattern:'この／その／あの／どの + N', explain:'Ta sama logika odległości co これ/それ/あれ, ale zawsze musi stać bezpośrednio przed rzeczownikiem — nie może stać samodzielnie.', jp:'この ほんは わたしのです。', en:'Ta książka jest moja.' },
       { pattern:'N + の (dopełniacz, rzeczownik pominięty)', explain:'の może zastąpić "N + の + rzeczownik", gdy rzeczownik jest już jasny z kontekstu.', jp:'それは わたしのですか。', en:'Czy to jest moje?' },
-      { pattern:'そうです／そうじゃありません', explain:'Używane do potwierdzania lub zaprzeczania pytaniom identyfikującym rzeczowniki (nie przymiotniki).', jp:'A: これは でんわ（電話）ですか。 B: はい、そうです。', en:'A: Czy to jest telefon? B: Tak, zgadza się.' },
-      { pattern:'N1と N2', explain:'"I", łączy rzeczowniki (nie czasowniki ani zdania).', jp:'これは 辞書と 本です。', en:'To jest słownik i książka.' },
+      { pattern:'そうです／そうじゃありません', explain:'Używane do potwierdzania lub zaprzeczania pytaniom identyfikującym rzeczowniki (nie przymiotniki).', jp:'A: これは でんわですか。 B: はい、そうです。', en:'A: Czy to jest telefon? B: Tak, zgadza się.' },
+      { pattern:'N1と N2', explain:'"I", łączy rzeczowniki (nie czasowniki ani zdania).', jp:'これは じしょと ほんです。', en:'To jest słownik i książka.' },
     ]
   },
   {
@@ -434,33 +653,219 @@ const grammarData = [
     items:[
       { pattern:'ここ／そこ／あそこ／どこ', explain:'Tutaj / tam / tam dalej / gdzie — używane dla miejsc, stoją samodzielnie jako podmiot.', jp:'トイレは あそこです。', en:'Toaleta jest tam.' },
       { pattern:'こちら／そちら／あちら／どちら', explain:'Grzeczniejsze wersje powyższych słów miejsca; używane też, by grzecznie zapytać o kierunek, pochodzenie lub osobę.', jp:'おくには どちらですか。', en:'Skąd pan/pani pochodzi? (grzecznie)' },
-      { pattern:'N1は N2の N3です', explain:'Pokazuje, że osoba (N1) należy do organizacji lub miejsca (N2), opisana rolą N3.', jp:'わたしは ブラジルの 会社の 人です。', en:'Jestem z brazylijskiej firmy.' },
-      { pattern:'この／その／あの たてもの + 〜かい／がい', explain:'Wyrażenia liczące piętra za pomocą ~階 (かい/がい), by opisać, na którym piętrze coś się znajduje.', jp:'エレベーターは あそこです。２かいです。', en:'Winda jest tam. To 2. piętro.' },
+      { pattern:'N1は N2の N3です', explain:'Pokazuje, że osoba (N1) należy do organizacji lub miejsca (N2), opisana rolą N3.', jp:'わたしは ブラジルの かいしゃの ひとです。', en:'Jestem z brazylijskiej firmy.' },
+      { pattern:'この／その／あの たてもの + 〜かい／がい', explain:'Wyrażenia liczące piętra za pomocą ~かい, by opisać, na którym piętrze coś się znajduje.', jp:'エレベーターは あそこです。２かいです。', en:'Winda jest tam. To 2. piętro.' },
     ]
   },
   {
     lesson:'Lekcja 4', ready:true,
     items:[
-      { pattern:'今 何時ですか／何分ですか', explain:'Pytanie o godzinę. 何時 = która godzina, 何分 = ile minut.', jp:'今 何時ですか。 ７時半です。', en:'Która jest teraz godzina? Jest 7:30.' },
-      { pattern:'N (czas)から N (czas)まで', explain:'"Od~ do~" — określa zakres czasu (lub miejsca).', jp:'銀行は ９時から ３時までです。', en:'Bank jest czynny od 9 do 15.' },
-      { pattern:'Czasownik + ます (forma grzeczna, teraźniejszo-przyszła)', explain:'Wprowadzenie do grzecznej formy ます: 起きます (wstawać), 寝ます (spać/kłaść się), 働きます (pracować), 休みます (odpoczywać/mieć wolne).', jp:'毎朝 ６時に 起きます。', en:'Codziennie rano wstaję o 6.' },
-      { pattern:'毎朝／毎晩／毎日 + czasownik', explain:'Wyrażenia opisujące codzienne czynności: "każdego ranka / wieczoru / dnia".', jp:'毎晩 11時に 寝ます。', en:'Każdego wieczoru kładę się spać o 23.' },
+      { pattern:'いま なんじですか／なんぷんですか', explain:'Pytanie o godzinę. なんじ = która godzina, なんぷん = ile minut.', jp:'いま なんじですか。 ７じはんです。', en:'Która jest teraz godzina? Jest 7:30.' },
+      { pattern:'N (czas)から N (czas)まで', explain:'"Od~ do~" — określa zakres czasu (lub miejsca).', jp:'ぎんこうは ９じから ３じまでです。', en:'Bank jest czynny od 9 do 15.' },
+      { pattern:'Czasownik + ます (forma grzeczna, teraźniejszo-przyszła)', explain:'Wprowadzenie do grzecznej formy ます: おきます (wstawać), ねます (spać/kłaść się), はたらきます (pracować), やすみます (odpoczywać/mieć wolne).', jp:'まいあさ ６じに おきます。', en:'Codziennie rano wstaję o 6.' },
+      { pattern:'まいあさ／まいばん／まいにち + czasownik', explain:'Wyrażenia opisujące codzienne czynności: "każdego ranka / wieczoru / dnia".', jp:'まいばん １１じに ねます。', en:'Każdego wieczoru kładę się spać o 23.' },
     ]
   },
   {
     lesson:'Lekcja 5', ready:true,
     items:[
-      { pattern:'miejsce + へ (に) 行きます／来ます／帰ります', explain:'Czasowniki kierunku "iść / przyjść / wrócić" z partykułą へ oznaczającą kierunek ruchu.', jp:'あした 大阪へ 行きます。', en:'Jutro jadę do Osaki.' },
-      { pattern:'środek transportu + で', explain:'で oznacza środek transportu przy czasownikach ruchu.', jp:'バスで 会社へ 行きます。', en:'Jadę do pracy autobusem.' },
-      { pattern:'人と いっしょに', explain:'"Razem z (osobą)" — dodaje towarzysza do czynności.', jp:'友達と いっしょに 行きます。', en:'Idę razem z przyjacielem.' },
-      { pattern:'いつ', explain:'"Kiedy" — pytanie o czas, bez potrzeby partykuły に po いつ.', jp:'いつ 日本へ 行きますか。', en:'Kiedy jedziesz do Japonii?' },
+      { pattern:'miejsce + へ (に) いきます／きます／かえります', explain:'Czasowniki kierunku "iść / przyjść / wrócić" z partykułą へ oznaczającą kierunek ruchu.', jp:'あした おおさかへ いきます。', en:'Jutro jadę do Osaki.' },
+      { pattern:'środek transportu + で', explain:'で oznacza środek transportu przy czasownikach ruchu.', jp:'バスで かいしゃへ いきます。', en:'Jadę do pracy autobusem.' },
+      { pattern:'ひとと いっしょに', explain:'"Razem z (osobą)" — dodaje towarzysza do czynności.', jp:'ともだちと いっしょに いきます。', en:'Idę razem z przyjacielem.' },
+      { pattern:'いつ', explain:'"Kiedy" — pytanie o czas, bez potrzeby partykuły に po いつ.', jp:'いつ にほんへ いきますか。', en:'Kiedy jedziesz do Japonii?' },
     ]
   },
-  { lesson:'Lekcja 6', ready:false, items:[] },
-  { lesson:'Lekcja 7', ready:false, items:[] },
-  { lesson:'Lekcja 8', ready:false, items:[] },
-  { lesson:'Lekcja 9', ready:false, items:[] },
-  { lesson:'Lekcja 10', ready:false, items:[] },
+  {
+    lesson:'Lekcja 6', ready:true,
+    items:[
+      { pattern:'N + を + czasownik', explain:'を wskazuje dopełnienie bliższe czasownika — na czym wykonywana jest czynność.', jp:'じゅーすを のみます。', en:'Piję sok.' },
+      { pattern:'N + を + します', explain:'します łączy się z rzeczownikami czynności, tworząc "robić coś".', jp:'サッカーを します。', en:'Gram w piłkę nożną.' },
+      { pattern:'なん vs なに', explain:'Oba znaczą "co". なん używane jest przed だ/な i przed licznikami, なに w pozostałych przypadkach.', jp:'それは なんですか。', en:'Co to jest?' },
+      { pattern:'miejsce + で + czasownik', explain:'で wskazuje miejsce, w którym dzieje się czynność.', jp:'えきで しんぶんを かいます。', en:'Kupuję gazetę na stacji.' },
+      { pattern:'czasownik(ません) + か／czasownik(ましょう)', explain:'ませんか to grzeczne zaproszenie, ましょう to propozycja wspólnego działania.', jp:'いっしょに きょうとへ いきませんか。', en:'Pojedziemy razem do Kioto?' },
+    ]
+  },
+  {
+    lesson:'Lekcja 7', ready:true,
+    items:[
+      { pattern:'N (narzędzie) + で + czasownik', explain:'で wskazuje narzędzie lub środek, za pomocą którego coś się robi.', jp:'はしで たべます。', en:'Jem pałeczkami.' },
+      { pattern:'「słowo」は N語で なんですか', explain:'Pytanie o to, jak dane słowo brzmi w innym języku.', jp:'「ありがとう」は えいごで なんですか。', en:'Jak "ありがとう" będzie po angielsku?' },
+      { pattern:'osoba + に あげます', explain:'"Dawać komuś" — に wskazuje odbiorcę.', jp:'やまださんは きむらさんに はなを あげました。', en:'Pan Yamada dał kwiaty pani Kimurze.' },
+      { pattern:'osoba に／から もらいます', explain:'"Dostawać od kogoś" — から używane zwłaszcza, gdy dawcą jest instytucja.', jp:'きむらさんは やまださんに はなを もらいました。', en:'Pani Kimura dostała kwiaty od pana Yamady.' },
+      { pattern:'もう + czasownik(ました) ／ まだです', explain:'もう pyta, czy coś już zrobiono; odpowiedź przecząca to まだです, nie forma ませんでした.', jp:'もう にもつを おくりましたか。はい、もう おくりました。', en:'Wysłałeś już paczkę? Tak, już wysłałem.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 8', ready:true,
+    items:[
+      { pattern:'przymiotnik な／い + です', explain:'Orzekanie przymiotnikowe: い zostaje bez zmian, な znika przed です. Przeczenie: い→くないです, な→じゃありません.', jp:'ふじさんは たかいです。', en:'Fudżi jest wysoka.' },
+      { pattern:'przymiotnik + N', explain:'Przymiotnik stoi bezpośrednio przed opisywanym rzeczownikiem.', jp:'たかい やまです。', en:'To wysoka góra.' },
+      { pattern:'とても ／ あまり', explain:'とても = "bardzo" (zdania twierdzące), あまり = "nie bardzo" (zdania przeczące).', jp:'シャンハイは あまり さむくないです。', en:'W Szanghaju nie jest bardzo zimno.' },
+      { pattern:'N は どうですか', explain:'Pytanie o wrażenie lub opinię o czymś znanym rozmówcy.', jp:'にほんの せいかつは どうですか。', en:'Jak ci się podoba życie w Japonii?' },
+      { pattern:'N1は どんな N2ですか', explain:'どんな pyta o cechy/rodzaj — "jaki/jaka jest N1".', jp:'ならは どんな まちですか。', en:'Jakim miastem jest Nara?' },
+    ]
+  },
+  {
+    lesson:'Lekcja 9', ready:true,
+    items:[
+      { pattern:'N + が + あります／わかります', explain:'Partykuła が towarzyszy czasownikom あります (posiadanie) i わかります (rozumienie).', jp:'わたしは あたらしい かばんが あります。', en:'Mam nową torbę.' },
+      { pattern:'N + が すきです／きらいです／じょうずです／へたです', explain:'Te przymiotniki oceniające również łączą się z が, nie z を.', jp:'にほんごが すきです。', en:'Lubię język japoński.' },
+      { pattern:'どんな + N', explain:'Pytanie o rodzaj/typ w ramach szerszej kategorii.', jp:'どんな のみものが すきですか。', en:'Jaki rodzaj napojów lubisz?' },
+      { pattern:'よく／だいたい／すこし／あまり／ぜんぜん', explain:'Przysłówki stopnia — od "bardzo dobrze" po "wcale nie" (ostatnie dwa z przeczeniem).', jp:'にほんごが すこし わかります。', en:'Trochę rozumiem japoński.' },
+      { pattern:'zdanie1 から、zdanie2', explain:'から łączy przyczynę (zdanie 1) ze skutkiem (zdanie 2).', jp:'じかんが ありませんから、ほんを よみません。', en:'Ponieważ nie mam czasu, nie czytam książek.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 10', ready:true,
+    items:[
+      { pattern:'N + が あります／います', explain:'あります dla rzeczy, います dla ludzi i zwierząt.', jp:'いもうとが います。', en:'Mam młodszą siostrę.' },
+      { pattern:'miejsce + に + N + が あります／います', explain:'に wskazuje miejsce istnienia czegoś/kogoś.', jp:'へやに つくえが あります。', en:'W pokoju jest biurko.' },
+      { pattern:'N1は N2(miejsce)に あります／います', explain:'Odwrócona kolejność — temat na początku, miejsce na końcu.', jp:'たなかさんは じむしょに います。', en:'Pan Tanaka jest w biurze.' },
+      { pattern:'N1の N2 (pozycja)', explain:'Słowa pozycji: うえ (na), した (pod), まえ (przed), うしろ (za), なか (w środku), そと (na zewnątrz), ひだり/みぎ (lewo/prawo), ちかく/となり (blisko/obok).', jp:'つくえの うえに はなが あります。', en:'Na biurku są kwiaty.' },
+      { pattern:'N1や N2', explain:'"I" — wylicza tylko przykładowe elementy z większej listy (w przeciwieństwie do と).', jp:'つくえの うえに ほんや ペンが あります。', en:'Na biurku są m.in. książki i długopisy.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 11', ready:true,
+    items:[
+      { pattern:'liczniki przedmiotów', explain:'ひとつ、ふたつ...とお liczy ogólnie do 10. Powyżej — zwykłe liczby ze specjalnymi licznikami: にん (osoby), まい (płaskie), だい (maszyny), さつ (książki), こ (małe przedmioty), かい (piętra).', jp:'りんごを よっつ かいました。', en:'Kupiłem 4 jabłka.' },
+      { pattern:'いくつ', explain:'"Ile sztuk" — pytanie dla liczników typu ひとつ、ふたつ.', jp:'みかんを いくつ かいましたか。', en:'Ile mandarynek kupiłeś?' },
+      { pattern:'なん + licznik', explain:'"Ile" z konkretnym licznikiem, np. なんにん (ile osób).', jp:'なんにん いますか。', en:'Ile osób tam jest?' },
+      { pattern:'どのくらい ／ ぐらい', explain:'どのくらい pyta o długość trwania, ぐらい dodaje się po liczbie jako "około".', jp:'どのくらい にほんごを べんきょうしましたか。さんねん べんきょうしました。', en:'Jak długo uczysz się japońskiego? Uczę się 3 lata.' },
+      { pattern:'czas + に + ~かい + czasownik', explain:'Wskazuje częstotliwość wykonywania czynności w danym okresie.', jp:'いっかげつに さんかい えいがを みます。', en:'Oglądam film 3 razy w miesiącu.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 12', ready:true,
+    items:[
+      { pattern:'odmiana czasowa przymiotników i rzeczowników', explain:'です→でした (twierdzenie), じゃありません→じゃありませんでした (przeczenie). Przymiotniki い: かった (przeszły), くなかった (przeszły przeczący).', jp:'きのうは さむかったです。', en:'Wczoraj było zimno.' },
+      { pattern:'N1は N2より przymiotnik です', explain:'Porównanie: "N1 jest bardziej ~ niż N2".', jp:'このかばんは そのかばんより きれいです。', en:'Ta torba jest ładniejsza niż tamta.' },
+      { pattern:'N1と N2と どちらが przymiotnik ですか', explain:'Pytanie "które z dwóch bardziej ~" — odpowiada się のほうが.', jp:'にほんごと えいごと どちらが すきですか。にほんごの ほうが すきです。', en:'Co bardziej lubisz, japoński czy angielski? Bardziej lubię japoński.' },
+      { pattern:'N(のなかで) なん／どこ／だれ／いつ が いちばん przymiotnik ですか', explain:'Pytanie o najwyższy stopień w danej grupie.', jp:'にほんで どこが いちばん きれいですか。とうきょうが いちばん きれいです。', en:'Gdzie w Japonii jest najładniej? Najładniej w Tokio.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 13', ready:true,
+    items:[
+      { pattern:'N + が ほしいです', explain:'"Chcę mieć coś" — używane tylko o pragnieniach mówiącego.', jp:'なにが ほしいですか。パンが ほしいです。', en:'Co chcesz mieć? Chcę chleb.' },
+      { pattern:'czasownik(rdzeń ます) + たいです', explain:'"Chcę coś zrobić" — partykułę を można zastąpić が.', jp:'おきなわへ いきたいです。', en:'Chcę jechać na Okinawę.' },
+      { pattern:'miejsce + へ + N／czasownik(rdzeń) + に いきます／きます／かえります', explain:'Wyraża cel wyjścia/przyjścia/powrotu.', jp:'にほんへ にほんごを べんきょうしに いきたいです。', en:'Chcę jechać do Japonii uczyć się japońskiego.' },
+      { pattern:'どこか ／ なにか', explain:'"Gdzieś" / "coś" — nieokreślone miejsce lub rzecz.', jp:'なにか のみたいです。', en:'Chcę się czegoś napić.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 14', ready:true,
+    items:[
+      { pattern:'forma て czasownika (wprowadzenie)', explain:'Trzy grupy czasowników odmieniają się inaczej: かきます→かいて, たべます→たべて, します→して.', jp:'かいて、たべて、して', en:'(przykładowe formy て)' },
+      { pattern:'czasownik(て) + ください', explain:'Grzeczna prośba o wykonanie czynności.', jp:'ちょっと まってください。', en:'Proszę chwilę poczekać.' },
+      { pattern:'czasownik(て) + います', explain:'Czynność trwająca w danym momencie.', jp:'いま えいがを みています。', en:'Teraz oglądam film.' },
+      { pattern:'czasownik(ます) + ましょうか', explain:'Propozycja zrobienia czegoś dla kogoś.', jp:'にもつを もちましょうか。', en:'Mogę ponieść bagaż?' },
+      { pattern:'zdanie1 が、zdanie2', explain:'が bez znaczenia "ale" — grzeczne wprowadzenie do wypowiedzi.', jp:'しつれいしますが、おなまえは。', en:'Przepraszam, jak się pan/pani nazywa?' },
+    ]
+  },
+  {
+    lesson:'Lekcja 15', ready:true,
+    items:[
+      { pattern:'czasownik(て) + もいいです', explain:'Pytanie o pozwolenie lub udzielenie pozwolenia.', jp:'しゃしんを とっても いいですか。', en:'Czy mogę zrobić zdjęcie?' },
+      { pattern:'czasownik(て) + はいけません', explain:'Zakaz — "nie wolno".', jp:'ここで たばこを すっては いけません。', en:'Nie wolno tu palić.' },
+      { pattern:'czasownik(て) + います (stan trwały)', explain:'Wynik czynności, który trwa — np. bycie w związku małżeńskim.', jp:'けっこんしています。', en:'Jestem żonaty/zamężna.' },
+      { pattern:'czasownik(て) + います (zawód/zwyczaj)', explain:'Opisuje zawód lub powtarzającą się czynność.', jp:'ぎんこうで はたらいています。', en:'Pracuję w banku.' },
+      { pattern:'しっています ／ しりません', explain:'"Wiem/znam" — forma przecząca to しりません, nie しっていません.', jp:'でんわばんごうを しっていますか。はい、しっています。', en:'Znasz numer telefonu? Tak, znam.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 16', ready:true,
+    items:[
+      { pattern:'czasownik(て)、czasownik(て) ~', explain:'Łączy kilka czynności wykonywanych po sobie w podanej kolejności.', jp:'あさ ジョギングを して、シャワーを あびて、かいしゃへ いきます。', en:'Rano biegam, biorę prysznic i idę do pracy.' },
+      { pattern:'przymiotnik い → くて', explain:'Forma łącząca przymiotników kończących się na い.', jp:'ミラーさんは わかくて、げんきです。', en:'Pan Miller jest młody i pełen energii.' },
+      { pattern:'rzeczownik／przymiotnik な (bez な) + で', explain:'Forma łącząca rzeczowników i przymiotników な.', jp:'ならは きれいで、しずかな まちです。', en:'Nara to ładne i ciche miasto.' },
+      { pattern:'czasownik(て)から、czasownik2', explain:'"Po zrobieniu X, robię Y" — kolejność zdarzeń.', jp:'くにへ かえってから、はたらきます。', en:'Po powrocie do kraju będę pracować.' },
+      { pattern:'どうやって', explain:'"Jak" — pytanie o sposób wykonania czegoś.', jp:'だいがくまで どうやって いきますか。', en:'Jak dojechać na uniwersytet?' },
+    ]
+  },
+  {
+    lesson:'Lekcja 17', ready:true,
+    items:[
+      { pattern:'forma ない czasownika (wprowadzenie)', explain:'かきます→かかない, たべます→たべない, します→しない, きます→こない.', jp:'かかない、たべない、しない、こない', en:'(przykładowe formy ない)' },
+      { pattern:'czasownik(ない) + でください', explain:'Prośba, by ktoś czegoś nie robił.', jp:'しゃしんを とらないでください。', en:'Proszę nie robić zdjęć.' },
+      { pattern:'czasownik(ない, bez い) + ければなりません', explain:'Obowiązek — "trzeba to zrobić".', jp:'くすりを のまなければなりません。', en:'Muszę wziąć lekarstwo.' },
+      { pattern:'czasownik(ない, bez い) + くてもいいです', explain:'"Nie trzeba tego robić".', jp:'あした こなくても いいです。', en:'Nie musisz jutro przychodzić.' },
+      { pattern:'czas + までに + czasownik', explain:'"Najpóźniej do" — termin, przed którym coś ma się wydarzyć.', jp:'かいぎは ごじまでに おわります。', en:'Spotkanie skończy się najpóźniej o 17.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 18', ready:true,
+    items:[
+      { pattern:'forma słownikowa czasownika', explain:'Podstawowa forma czasownika: かきます→かく, たべます→たべる, します→する, きます→くる.', jp:'かく、たべる、する、くる', en:'(przykładowe formy słownikowe)' },
+      { pattern:'forma słownikowa + こと + が できます', explain:'"Umieć/móc coś zrobić" — こと zamienia czasownik w rzeczownik.', jp:'えを かくことが できます。', en:'Umiem rysować.' },
+      { pattern:'わたしの しゅみは + forma słownikowa + こと です', explain:'Sposób mówienia o swoim hobby.', jp:'わたしの しゅみは えいがを みることです。', en:'Moje hobby to oglądanie filmów.' },
+      { pattern:'N の／forma słownikowa + まえに', explain:'"Przed" — coś dzieje się zanim nastąpi dana czynność.', jp:'ねる まえに くすりを のみます。', en:'Biorę lekarstwo przed snem.' },
+      { pattern:'なかなか + przeczenie', explain:'"Wciąż nie / nigdy" — podkreśla, że coś długo się nie dzieje.', jp:'バスが なかなか きません。', en:'Autobus wciąż nie przyjeżdża.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 19', ready:true,
+    items:[
+      { pattern:'forma た czasownika', explain:'Odmienia się tak samo jak forma て, zamieniając て→た i で→だ.', jp:'かいた、たべた、した、きた', en:'(przykładowe formy た)' },
+      { pattern:'czasownik(た) + こと が あります', explain:'"Mieć doświadczenie zrobienia czegoś w przeszłości".', jp:'にほんへ いったことが ありますか。', en:'Czy byłeś kiedyś w Japonii?' },
+      { pattern:'czasownik(た)り、czasownik(た)り + します', explain:'Wylicza przykładowe czynności, bez wskazywania kolejności.', jp:'にちようびは そうじしたり、せんたくしたりします。', en:'W niedziele np. sprzątam, robię pranie.' },
+      { pattern:'なります', explain:'"Stawać się" — przymiotnik い→く, な→に, rzeczownik+に, przed なります.', jp:'さむく なります。', en:'Robi się zimno.' },
+      { pattern:'そうですね', explain:'Wyrażanie zgody lub współczucia z tym, co powiedział rozmówca.', jp:'さむく なりましたね。そうですね！', en:'Zrobiło się zimno, prawda? Tak, racja!' },
+    ]
+  },
+  {
+    lesson:'Lekcja 20', ready:true,
+    items:[
+      { pattern:'styl grzeczny a styl zwykły', explain:'です／ます to styl grzeczny (obcy, formalny); forma zwykła używana jest wśród bliskich osób.', jp:'のみます ⇔ のむ', en:'(grzeczne i zwykłe "pić")' },
+      { pattern:'odmiana stylu zwykłego', explain:'Czasowniki, przymiotniki i rzeczowniki mają odrębne formy zwykłe w czasie teraźniejszym i przeszłym, twierdzące i przeczące.', jp:'かく／かいた／かかない／かかなかった', en:'(pisać / napisałem / nie piszę / nie napisałem)' },
+      { pattern:'pomijanie か w mowie potocznej', explain:'W pytaniach potocznych か często się pomija, a intonacja rośnie na końcu.', jp:'コーヒーを のむ？', en:'Pijesz kawę?' },
+      { pattern:'けど', explain:'Potoczny odpowiednik が w znaczeniu "ale".', jp:'からいけど、おいしい。', en:'Ostre, ale smaczne.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 21', ready:true,
+    items:[
+      { pattern:'forma zwykła + と おもいます', explain:'Wyrażanie opinii lub przypuszczenia mówiącego.', jp:'あした あめが ふると おもいます。', en:'Myślę, że jutro będzie padać.' },
+      { pattern:'「cytat」／forma zwykła + と いいます', explain:'Cytowanie bezpośrednie (w cudzysłowie) i pośrednie (forma zwykła).', jp:'ねる まえに、「おやすみなさい」と いいます。', en:'Przed snem mówi się "oyasuminasai".' },
+      { pattern:'forma zwykła + でしょう？', explain:'"Prawda?" — oczekiwanie potwierdzenia od słuchacza.', jp:'あの かばんは たかかったでしょう？', en:'Ta torba musiała być droga, prawda?' },
+      { pattern:'miejsce + で + N が あります', explain:'Odbywanie się wydarzenia (impreza, festiwal, wypadek) w danym miejscu.', jp:'あした パーティーが あります。', en:'Jutro będzie impreza.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 22', ready:true,
+    items:[
+      { pattern:'modyfikowanie rzeczownika zdaniem podrzędnym', explain:'Zdanie w formie zwykłej stoi przed rzeczownikiem i go opisuje.', jp:'とうきょうへ いくひと', en:'Osoba, która jedzie do Tokio.' },
+      { pattern:'podmiot w zdaniu modyfikującym + が', explain:'W zdaniu podrzędnym opisującym rzeczownik podmiot oznacza się が, nie は.', jp:'わたしが せんしゅう みた えいが', en:'Film, który obejrzałem w zeszłym tygodniu.' },
+      { pattern:'forma słownikowa + じかん／やくそく／ようじ', explain:'"Czas/umówione spotkanie/sprawa" na wykonanie danej czynności.', jp:'あさごはんを たべる じかんが ありません。', en:'Nie mam czasu na śniadanie.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 23', ready:true,
+    items:[
+      { pattern:'forma słownikowa／ない／な／の + とき', explain:'"Kiedy" — wskazuje moment lub stan, w którym coś się dzieje.', jp:'しんぶんを よむとき、めがねを かけます。', en:'Kiedy czytam gazetę, zakładam okulary.' },
+      { pattern:'forma słownikowa+とき vs forma た+とき', explain:'Forma słownikowa: czynność jeszcze się nie skończyła. Forma た: czynność już się skończyła.', jp:'とうきょうへ いくとき、かばんを かいました。', en:'Kupiłem tę torbę w drodze do Tokio.' },
+      { pattern:'forma słownikowa／ない + と、~', explain:'Wskazuje nieunikniony skutek danej czynności lub warunku.', jp:'このボタンを おすと、おつりが でます。', en:'Jeśli naciśniesz ten przycisk, wyjdzie reszta.' },
+      { pattern:'miejsce + を + czasownik ruchu', explain:'を wskazuje miejsce, przez które ktoś się przemieszcza.', jp:'こうえんを さんぽします。', en:'Spaceruję po parku.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 24', ready:true,
+    items:[
+      { pattern:'くれます', explain:'"Ktoś daje mnie/mojej rodzinie" — przeciwieństwo あげます, gdy odbiorcą jest mówiący.', jp:'さとうさんは わたしに カードを くれました。', en:'Pan Sato dał mi kartkę.' },
+      { pattern:'czasownik(て) + あげます', explain:'Robić coś dla kogoś z życzliwości — podmiotem jest wykonawca.', jp:'みちを おしえて あげました。', en:'Pokazałem drogę.' },
+      { pattern:'czasownik(て) + もらいます', explain:'Dostawać przysługę od kogoś — podmiotem jest odbiorca.', jp:'にほんごを おしえて もらいました。', en:'Nauczono mnie japońskiego.' },
+      { pattern:'czasownik(て) + くれます', explain:'Ktoś robi coś dla mnie — podmiotem jest wykonawca, odbiorcą zwykle mówiący.', jp:'かさを かして くれました。', en:'Ktoś pożyczył mi parasol.' },
+    ]
+  },
+  {
+    lesson:'Lekcja 25', ready:true,
+    items:[
+      { pattern:'forma zwykła czasu przeszłego + ら、~', explain:'"Gdyby / jeśli" — warunek hipotetyczny.', jp:'おかねが あったら、りょこうします。', en:'Gdybym miał pieniądze, pojechałbym w podróż.' },
+      { pattern:'czasownik(た) + ら', explain:'"Po tym jak / gdy" — warunek czasowy, czynność następuje po zakończeniu poprzedniej.', jp:'いえへ かえったら、シャワーを あびます。', en:'Kiedy wrócę do domu, wezmę prysznic.' },
+      { pattern:'czasownik(て)も／przymiotnik(くて)も／な(で)も', explain:'"Mimo że..." — wynik sprzeczny z oczekiwaniami.', jp:'たかくても、かいたいです。', en:'Mimo że drogie, chcę to kupić.' },
+      { pattern:'もし ... たら ／ いくら ... ても', explain:'もし podkreśla hipotezę w zdaniu z たら, いくら podkreśla stopień w zdaniu z ても.', jp:'もし おかねが あったら、りょこうしたいです。', en:'Gdybym tak miał pieniądze, chciałbym podróżować.' },
+    ]
+  },
 ];
 
 const vocabData = [
@@ -524,19 +929,91 @@ const kanjiData = [
   { k:'小', on:'ショウ', kun:'ちい.さい', meaning:'mały', lesson:'—' },
   { k:'中', on:'チュウ', kun:'なか', meaning:'środek / wewnątrz', lesson:'—' },
   { k:'外', on:'ガイ', kun:'そと', meaning:'na zewnątrz', lesson:'—' },
-  { k:'上', on:'ジョウ', kun:'うえ', meaning:'góra / nad', lesson:'—' },
-  { k:'下', on:'カ', kun:'した', meaning:'dół / pod', lesson:'—' },
+  { k:'上', on:'ジョウ', kun:'うえ', meaning:'góra / nad', lesson:'10' },
+  { k:'下', on:'カ', kun:'した', meaning:'dół / pod', lesson:'10' },
   { k:'本', on:'ホン', kun:'—', meaning:'książka / pochodzenie', lesson:'2' },
   { k:'今', on:'コン', kun:'いま', meaning:'teraz', lesson:'4' },
   { k:'何', on:'カ', kun:'なに・なん', meaning:'co', lesson:'1' },
   { k:'時', on:'ジ', kun:'とき', meaning:'czas / godzina', lesson:'4' },
   { k:'半', on:'ハン', kun:'なか.ば', meaning:'połowa', lesson:'4' },
   { k:'分', on:'フン・ブン', kun:'わ.ける', meaning:'minuta / część', lesson:'4' },
-  { k:'年', on:'ネン', kun:'とし', meaning:'rok', lesson:'—' },
+  { k:'年', on:'ネン', kun:'とし', meaning:'rok', lesson:'11' },
   { k:'会', on:'カイ', kun:'あ.う', meaning:'spotkanie / zrzeszenie', lesson:'1' },
   { k:'社', on:'シャ', kun:'やしろ', meaning:'firma / świątynia', lesson:'1' },
   { k:'行', on:'コウ', kun:'い.く', meaning:'iść', lesson:'5' },
   { k:'来', on:'ライ', kun:'く.る', meaning:'przychodzić', lesson:'5' },
+  { k:'一', on:'イチ', kun:'ひと.つ', meaning:'jeden', lesson:'11' },
+  { k:'二', on:'ニ', kun:'ふた.つ', meaning:'dwa', lesson:'11' },
+  { k:'三', on:'サン', kun:'みっ.つ', meaning:'trzy', lesson:'11' },
+  { k:'四', on:'シ', kun:'よん・よっ.つ', meaning:'cztery', lesson:'11' },
+  { k:'五', on:'ゴ', kun:'いつ.つ', meaning:'pięć', lesson:'11' },
+  { k:'六', on:'ロク', kun:'むっ.つ', meaning:'sześć', lesson:'11' },
+  { k:'七', on:'シチ', kun:'なな.つ', meaning:'siedem', lesson:'11' },
+  { k:'八', on:'ハチ', kun:'やっ.つ', meaning:'osiem', lesson:'11' },
+  { k:'九', on:'キュウ・ク', kun:'ここの.つ', meaning:'dziewięć', lesson:'11' },
+  { k:'十', on:'ジュウ', kun:'とお', meaning:'dziesięć', lesson:'11' },
+  { k:'百', on:'ヒャク', kun:'もも', meaning:'sto', lesson:'11' },
+  { k:'千', on:'セン', kun:'ち', meaning:'tysiąc', lesson:'11' },
+  { k:'万', on:'マン・バン', kun:'よろず', meaning:'dziesięć tysięcy', lesson:'11' },
+  { k:'円', on:'エン', kun:'まる.い', meaning:'jen / koło', lesson:'11' },
+  { k:'曜', on:'ヨウ', kun:'—', meaning:'dzień tygodnia', lesson:'4' },
+  { k:'週', on:'シュウ', kun:'—', meaning:'tydzień', lesson:'11' },
+  { k:'毎', on:'マイ', kun:'—', meaning:'każdy', lesson:'4' },
+  { k:'東', on:'トウ', kun:'ひがし', meaning:'wschód', lesson:'—' },
+  { k:'西', on:'セイ・サイ', kun:'にし', meaning:'zachód', lesson:'—' },
+  { k:'南', on:'ナン', kun:'みなみ', meaning:'południe', lesson:'—' },
+  { k:'北', on:'ホク', kun:'きた', meaning:'północ', lesson:'—' },
+  { k:'左', on:'サ', kun:'ひだり', meaning:'lewo', lesson:'10' },
+  { k:'右', on:'ウ・ユウ', kun:'みぎ', meaning:'prawo', lesson:'10' },
+  { k:'内', on:'ナイ', kun:'うち', meaning:'wewnątrz', lesson:'10' },
+  { k:'前', on:'ゼン', kun:'まえ', meaning:'przed / z przodu', lesson:'10' },
+  { k:'後', on:'ゴ・コウ', kun:'あと・うし.ろ', meaning:'po / z tyłu', lesson:'10' },
+  { k:'間', on:'カン', kun:'あいだ', meaning:'pomiędzy / odstęp', lesson:'10' },
+  { k:'父', on:'フ', kun:'ちち', meaning:'ojciec', lesson:'—' },
+  { k:'母', on:'ボ', kun:'はは', meaning:'matka', lesson:'—' },
+  { k:'友', on:'ユウ', kun:'とも', meaning:'przyjaciel', lesson:'16' },
+  { k:'高', on:'コウ', kun:'たか.い', meaning:'wysoki / drogi', lesson:'8' },
+  { k:'安', on:'アン', kun:'やす.い', meaning:'tani / bezpieczny', lesson:'8' },
+  { k:'新', on:'シン', kun:'あたら.しい', meaning:'nowy', lesson:'16' },
+  { k:'古', on:'コ', kun:'ふる.い', meaning:'stary', lesson:'8' },
+  { k:'長', on:'チョウ', kun:'なが.い', meaning:'długi', lesson:'12' },
+  { k:'多', on:'タ', kun:'おお.い', meaning:'dużo', lesson:'12' },
+  { k:'少', on:'ショウ', kun:'すく.ない・すこ.し', meaning:'mało', lesson:'9' },
+  { k:'早', on:'ソウ', kun:'はや.い', meaning:'wczesny / szybki', lesson:'4' },
+  { k:'山', on:'サン', kun:'やま', meaning:'góra', lesson:'12' },
+  { k:'川', on:'セン', kun:'かわ', meaning:'rzeka', lesson:'—' },
+  { k:'田', on:'デン', kun:'た', meaning:'pole ryżowe', lesson:'—' },
+  { k:'天', on:'テン', kun:'あめ', meaning:'niebo', lesson:'21' },
+  { k:'気', on:'キ', kun:'—', meaning:'energia / nastrój', lesson:'21' },
+  { k:'雨', on:'ウ', kun:'あめ', meaning:'deszcz', lesson:'21' },
+  { k:'電', on:'デン', kun:'—', meaning:'elektryczność', lesson:'5' },
+  { k:'車', on:'シャ', kun:'くるま', meaning:'samochód', lesson:'5' },
+  { k:'駅', on:'エキ', kun:'—', meaning:'stacja', lesson:'5' },
+  { k:'道', on:'ドウ', kun:'みち', meaning:'droga', lesson:'23' },
+  { k:'店', on:'テン', kun:'みせ', meaning:'sklep', lesson:'6' },
+  { k:'家', on:'カ・ケ', kun:'いえ・や', meaning:'dom', lesson:'15' },
+  { k:'見', on:'ケン', kun:'み.る', meaning:'patrzeć / widzieć', lesson:'6' },
+  { k:'聞', on:'ブン', kun:'き.く', meaning:'słuchać / pytać', lesson:'6' },
+  { k:'話', on:'ワ', kun:'はな.す', meaning:'mówić', lesson:'6' },
+  { k:'読', on:'ドク', kun:'よ.む', meaning:'czytać', lesson:'6' },
+  { k:'書', on:'ショ', kun:'か.く', meaning:'pisać', lesson:'6' },
+  { k:'買', on:'バイ', kun:'か.う', meaning:'kupować', lesson:'6' },
+  { k:'食', on:'ショク', kun:'た.べる', meaning:'jeść', lesson:'6' },
+  { k:'飲', on:'イン', kun:'の.む', meaning:'pić', lesson:'6' },
+  { k:'立', on:'リツ', kun:'た.つ', meaning:'stać', lesson:'14' },
+  { k:'入', on:'ニュウ', kun:'はい.る・い.れる', meaning:'wchodzić', lesson:'17' },
+  { k:'出', on:'シュツ', kun:'で.る・だ.す', meaning:'wychodzić', lesson:'17' },
+  { k:'言', on:'ゲン', kun:'い.う', meaning:'mówić', lesson:'21' },
+  { k:'思', on:'シ', kun:'おも.う', meaning:'myśleć', lesson:'21' },
+  { k:'作', on:'サク', kun:'つく.る', meaning:'robić / tworzyć', lesson:'19' },
+  { k:'使', on:'シ', kun:'つか.う', meaning:'używać', lesson:'13' },
+  { k:'待', on:'タイ', kun:'ま.つ', meaning:'czekać', lesson:'14' },
+  { k:'持', on:'ジ', kun:'も.つ', meaning:'trzymać / mieć', lesson:'13' },
+  { k:'国', on:'コク', kun:'くに', meaning:'kraj', lesson:'1' },
+  { k:'校', on:'コウ', kun:'—', meaning:'szkoła', lesson:'1' },
+  { k:'語', on:'ゴ', kun:'かた.る', meaning:'język / słowo', lesson:'2' },
+  { k:'英', on:'エイ', kun:'—', meaning:'angielski', lesson:'2' },
+  { k:'名', on:'メイ・ミョウ', kun:'な', meaning:'imię', lesson:'1' },
 ];
 
 /* ---------------- PAGE RENDERERS ---------------- */
@@ -628,7 +1105,7 @@ function goToGrammarLesson(i){
 function grammarPage(){
   return `
     <h2>Gramatyka</h2>
-    <div class="eyebrow-count">Lekcje 1–5 uzupełnione · reszta dochodzi na bieżąco</div>
+    <div class="eyebrow-count">Wszystkie 25 lekcji (Minna no Nihongo I)</div>
     <div id="grammar-body">${grammarLessonBody(currentGrammarLesson)}</div>
     <div class="note-box">Wyjaśnienia gramatyki pochodzą z pamięci na podstawie Minna no Nihongo I — warto porównać z własnym podręcznikiem i zgłosić wszystko, co wygląda podejrzanie, żeby to poprawić.</div>
   `;
@@ -654,7 +1131,7 @@ function vocabPage(){
     <table class="data" id="vocab-table">
       <thead><tr><th>Kanji</th><th>Hiragana</th><th>Znaczenie</th><th>Kategoria</th><th>Lekcja</th></tr></thead>
       <tbody>
-        ${vocabData.map(v => `<tr data-lesson="${v.lesson}" data-category="${v.category}"><td class="kanji-cell">${v.kanji}</td><td>${v.hira}</td><td>${v.meaning}</td><td><span class="pill-cat">${v.category}</span></td><td>${v.lesson}</td></tr>`).join('')}
+        ${vocabData.map(v => `<tr data-lesson="${v.lesson}" data-category="${v.category}"><td class="kanji-cell" data-k="${v.kanji}">${v.kanji}</td><td>${v.hira}</td><td>${v.meaning}</td><td><span class="pill-cat">${v.category}</span></td><td>${v.lesson}</td></tr>`).join('')}
       </tbody>
     </table>
   `;
@@ -676,12 +1153,12 @@ function filterVocab(){
 function kanjiPage(){
   return `
     <h2>Kanji</h2>
-    <div class="eyebrow-count">${kanjiData.length} z ok. 100 kanji N5 jak dotąd</div>
+    <div class="eyebrow-count">Pełna lista ${kanjiData.length} kanji N5</div>
     <input class="searchbar" id="kanji-search" placeholder="Szukaj po kanji, odczycie lub znaczeniu..." oninput="filterTable('kanji-search','kanji-table')">
     <table class="data" id="kanji-table">
       <thead><tr><th>Kanji</th><th>Odczyt on</th><th>Odczyt kun</th><th>Znaczenie</th><th>Lekcja</th></tr></thead>
       <tbody>
-        ${kanjiData.map(k => `<tr><td class="kanji-cell">${k.k}</td><td>${k.on}</td><td>${k.kun}</td><td>${k.meaning}</td><td>${k.lesson}</td></tr>`).join('')}
+        ${kanjiData.map(k => `<tr><td class="kanji-cell" data-k="${k.k}">${k.k}</td><td>${k.on}</td><td>${k.kun}</td><td>${k.meaning}</td><td>${k.lesson}</td></tr>`).join('')}
       </tbody>
     </table>
   `;
@@ -717,7 +1194,7 @@ function resourcesPage(){
     <h2>Materiały</h2>
     <div class="eyebrow-count">Testy próbne, słowniki, narzędzia i linki zewnętrzne</div>
     ${resourceGroups.map(g => `
-      <div class="check-group">
+      <div class="res-group">
         <h3>${g.title}</h3>
         <ul class="reslist">
           ${g.items.map(i => `<li><a href="${i.url}" target="_blank" rel="noopener">${i.name}</a><p>${i.desc}</p></li>`).join('')}
@@ -744,7 +1221,7 @@ pages.forEach(p => {
   const btn = document.createElement('button');
   btn.textContent = p.label;
   btn.id = 'nav-' + p.id;
-  btn.onclick = () => goTo(p.id);
+  btn.onclick = () => { goTo(p.id); if(mobileQuery.matches) closeSidebar(); };
   navlist.appendChild(btn);
 });
 
